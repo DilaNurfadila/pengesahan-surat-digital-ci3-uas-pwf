@@ -1,7 +1,5 @@
 # Pengesahan Surat Digital Berbasis web
 
----
-
 ## Pengenalan
 
 Aplikasi Pengesahan Surat Digital dirancang untuk mempermudah proses pengesahan surat.
