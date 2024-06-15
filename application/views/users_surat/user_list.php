@@ -65,7 +65,7 @@
                                         <?php } ?>
                                     <?php } else { ?>
                                         <tr class="text-gray-700 dark:text-gray-400">
-                                            <td colspan="10" align="center" class="px-4 py-3 text-sm dark:text-gray-400">Tidak ada pengguna</td>
+                                            <td colspan="10" class="px-4 py-3 text-sm text-center dark:text-gray-400">Tidak ada pengguna</td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>

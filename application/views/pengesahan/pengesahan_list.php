@@ -93,7 +93,7 @@
                                         <?php } ?>
                                     <?php } else { ?>
                                         <tr>
-                                            <td colspan="6" align="center">Tidak ada permintaan</td>
+                                            <td colspan="6" class="px-4 py-3 text-sm text-center dark:text-gray-400">Tidak ada permintaan</td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>
