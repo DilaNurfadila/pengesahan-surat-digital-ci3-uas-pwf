@@ -207,7 +207,6 @@ $is_nonactiveUsersPage_span = $nonactiveUsersPage ? $span_active_state : '';
                         <?php } ?>
                     </ul>
                 </li>
-
             <?php } else { ?>
                 <li class="relative px-6 py-3">
                     <?= $is_approvesPage_span ?>
@@ -232,8 +231,8 @@ $is_nonactiveUsersPage_span = $nonactiveUsersPage ? $span_active_state : '';
         <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="<?= site_url('') ?>">
             Legalitas Surat
         </a>
-        <?php if ($this->session->has_userdata('email')) { ?>
-            <ul class="mt-6">
+        <ul class="mt-6">
+            <?php if ($this->session->has_userdata('email')) { ?>
                 <li class="relative px-6 py-3">
                     <?= $is_homePage_span ?>
                     <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 <?= $is_homePage_a ?>" href="<?= site_url('') ?>">
@@ -314,6 +313,6 @@ $is_nonactiveUsersPage_span = $nonactiveUsersPage ? $span_active_state : '';
                     </a>
                 </li>
             <?php } ?>
-            </ul>
+        </ul>
     </div>
 </aside>

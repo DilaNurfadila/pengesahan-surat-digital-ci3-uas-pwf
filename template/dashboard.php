@@ -11,8 +11,8 @@
     <div class="container mx-auto py-6 px-6" id="about">
         <h1 id="datang" class="text-5xl font-bold mb-4 dark:text-white">Selamat datang <?= $user ?></h1>
         <div class="container mx-auto">
-            <div class="flex gap-5">
-                <div class="w-full lg:w-1/2">
+            <div class="lg:flex gap-5 ">
+                <div class="w-full lg:w-1/2 mb-5">
                     <div class="flex items-center mb-5">
                         <div class="flex-shrink-0 text-center mr-4">
                             <h1 class="text-9xl font-bold mb-0 dark:text-white">4</h1>
