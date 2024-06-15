@@ -17,7 +17,7 @@
                         Daftar Permintaan
                     </h2>
                     <div class="w-full overflow-hidden rounded-lg shadow-xs">
-                        <div class="w-full">
+                        <div class="w-full overflow-x-auto">
                             <?= $this->session->flashdata('msg') ?>
                             <table class="w-full whitespace-no-wrap">
                                 <thead>
