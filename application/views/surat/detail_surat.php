@@ -124,20 +124,20 @@
 
                             </table>
                             <br>
-                            <?php if ($this->session->has_userdata('email')) { ?>
-                                <?php if ($validation->status_surat == "Disetujui") { ?>
-                                    <a href="<?= site_url('surat/approved') ?>"><button class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 ml-1">Back</button></a>
-                                <?php } else if ($validation->status_surat == "Ditolak") { ?>
-                                    <a href="<?= site_url('surat/rejected') ?>"><button class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 ml-1">Back</button></a>
-                                <?php } else if (($validation->nama_pemeriksa == $this->session->userdata('namalengkap') || $validation->nama_penandatangan == $this->session->userdata('namalengkap')) && ($validation->status_surat == 'Menunggu' || $validation->status_surat == 'Diproses')) { ?>
-                                    <a href="<?= site_url('pengesahan') ?>"><button class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 ml-1">Back</button></a>
-                                <?php } else { ?>
-                                    <a href="<?= site_url('surat') ?>"><button class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 ml-1">Back</button></a>
-                                <?php } ?>
-                            <?php } else { ?>
-                                <a href="<?= site_url('surat/approved') ?>"><button class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 ml-1">Back</button></a>
-                            <?php } ?>
                         </div>
+                        <?php if ($this->session->has_userdata('email')) { ?>
+                            <?php if ($validation->status_surat == "Disetujui") { ?>
+                                <a href="<?= site_url('surat/approved') ?>"><button class="mt-5 focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 ml-1">Back</button></a>
+                            <?php } else if ($validation->status_surat == "Ditolak") { ?>
+                                <a href="<?= site_url('surat/rejected') ?>"><button class="mt-5 focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 ml-1">Back</button></a>
+                            <?php } else if (($validation->nama_pemeriksa == $this->session->userdata('namalengkap') || $validation->nama_penandatangan == $this->session->userdata('namalengkap')) && ($validation->status_surat == 'Menunggu' || $validation->status_surat == 'Diproses')) { ?>
+                                <a href="<?= site_url('pengesahan') ?>"><button class="mt-5 focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 ml-1">Back</button></a>
+                            <?php } else { ?>
+                                <a href="<?= site_url('surat') ?>"><button class="mt-5 focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 ml-1">Back</button></a>
+                            <?php } ?>
+                        <?php } else { ?>
+                            <a href="<?= site_url('surat/approved') ?>"><button class="mt-5 focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 ml-1">Back</button></a>
+                        <?php } ?>
                     </div>
                 </div>
         </div>

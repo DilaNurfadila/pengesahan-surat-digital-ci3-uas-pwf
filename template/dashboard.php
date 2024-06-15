@@ -18,7 +18,7 @@
                             <h1 class="text-9xl font-bold mb-0 dark:text-white">4</h1>
                             <h5 class="text-3xl font-medium mb-0 font-bold tracking-widest dark:text-white">Cara</h5>
                         </div>
-                        <h3 class="leading-relaxed text-4xl mb-0 font-bold dark:text-white">untuk meminta surat di approve & di legalisir</h3>
+                        <h3 class="leading-relaxed text-3xl mb-0 font-bold dark:text-white">untuk meminta surat di approve & di legalisir</h3>
                     </div>
                     <p class="mb-4 dark:text-white">Ada 4 cara untuk mendapat legalisir surat</p>
                     <p class="mb-3 flex items-center dark:text-white"><i class="far fa-check-circle text-blue-500 mr-3"></i>Login terlebih dahulu</p>
