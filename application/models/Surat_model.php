@@ -32,9 +32,8 @@ class Surat_model extends CI_Model
 			'id_user' => $this->session->userdata('iduser'),
 			'jenis_surat' => $this->input->post('jenis_surat'),
 			'judul_surat' => $this->input->post('judul_surat'),
-			'file_surat' => $fileData['file_name'], // Store uploaded file name
+			'file_surat' => $fileData, // Store uploaded file name
 			'tanggal_surat' => $this->input->post('tanggal_surat'),
-			'nomor_agenda' => $this->input->post('nomor_agenda'),
 			'tanggal_agenda' => $this->input->post('tanggal_agenda'),
 			'tujuan_surat' => $this->input->post('tujuan_surat'),
 			'perihal_surat' => $this->input->post('perihal_surat'),
@@ -89,9 +88,36 @@ class Surat_model extends CI_Model
 		return $query->result();
 	}
 
-	// fungsi untuk edit data cats sesuai id
+	public function read_by_checked()
+	{
+		$this->db->join('surat', 'pengesahan.id_surat = surat.id_surat');
+		$this->db->join('user', 'surat.id_user = user.id_user');
+		$this->db->where('tanggal_diperiksa IS NOT NULL');
+		$this->db->where('status_surat', 'Diproses');
+		$query = $this->db->get('pengesahan');
+		return $query->result();
+	}
+
+	public function read_by_rejected()
+	{
+		$this->db->join('surat', 'pengesahan.id_surat = surat.id_surat');
+		$this->db->join('user', 'surat.id_user = user.id_user');
+		$this->db->where('status_surat', 'Ditolak');
+		$query = $this->db->get('pengesahan');
+		return $query->result();
+	}
+
 	public function update($id_surat, $id_legalisir, $fileData)
 	{
+		$this->db->where('id_surat', $id_surat);
+		$query = $this->db->get('surat');
+
+		// var_dump($query->row()->file_surat);
+
+		if ($fileData !== $query->row()->file_surat) {
+			unlink('./assets/pdf/' . $query->row()->file_surat); // menghapus foto lama
+		}
+
 		$data_surat = array(
 			'jenis_surat' => $this->input->post('jenis_surat'),
 			'judul_surat' => $this->input->post('judul_surat'),
@@ -123,5 +149,22 @@ class Surat_model extends CI_Model
 		$this->db->where('id_legalisir', $id_pengesahan);
 		$this->db->delete('pengesahan');
 		unlink('./assets/pdf/' . $query->row()->file_surat);
+	}
+
+	public function resubmit($id_surat, $id_legalisir)
+	{
+		$data_surat = array(
+			'status_surat' => "Menunggu",
+		);
+
+		$data_pengesahan = array(
+			'tanggal_diperiksa' => NULL,
+			'tanggal_ditandatangan' => NULL,
+			'keterangan' => NULL,
+		);
+		$this->db->where('id_surat', $id_surat);
+		$this->db->update('surat', $data_surat);
+		$this->db->where('id_legalisir', $id_legalisir);
+		$this->db->update('pengesahan', $data_pengesahan);
 	}
 }

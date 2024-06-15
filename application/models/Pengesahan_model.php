@@ -119,7 +119,8 @@ class Pengesahan_model extends CI_Model
 
         $data_pengesahan = array(
             'tanggal_diperiksa' => date('Y-m-d H:i:s'),
-            'tanggal_ditandatangan' => NULL
+            'tanggal_ditandatangan' => NULL,
+            'keterangan' => $this->input->post('reject_comment')
         );
 
         $data_surat = array(
@@ -167,6 +168,7 @@ class Pengesahan_model extends CI_Model
         );
 
         $data_surat = array(
+            'nomor_agenda' => $this->input->post('nomor_agenda'),
             'status_surat' => 'Disetujui'
         );
 
@@ -176,14 +178,22 @@ class Pengesahan_model extends CI_Model
         $this->db->update('surat', $data_surat);
     }
 
-    public function reject_signed($id_surat)
+    public function reject_signed($id_surat, $id_pengesahan, $tanggal_diperiksa)
     {
         date_default_timezone_set('Asia/Jakarta');
+
+        $data_pengesahan = array(
+            'tanggal_diperiksa' => $tanggal_diperiksa,
+            'tanggal_ditandatangan' => NULL,
+            'keterangan' => $this->input->post('reject_comment')
+        );
 
         $data_surat = array(
             'status_surat' => 'Ditolak'
         );
 
+        $this->db->where('id_legalisir', $id_pengesahan);
+        $this->db->update('pengesahan', $data_pengesahan);
         $this->db->where('id_surat', $id_surat);
         $this->db->update('surat', $data_surat);
     }

@@ -16,6 +16,7 @@ class Surat extends CI_Controller
 
 	public function index()
 	{
+		if ($this->session->userdata('role') != 'Pembuat' && $this->session->userdata('role') != 'Penandatangan') redirect('welcome');
 		if (!$this->session->userdata('email')) redirect('auth/login');
 		$config['base_url'] = site_url('surat/index');
 		$config['total_rows'] = $this->db->count_all('surat');
@@ -27,36 +28,67 @@ class Surat extends CI_Controller
 		$start = $this->uri->segment(3) ? $this->uri->segment(3) : 0;
 
 		$data['i'] = $start + 1;
+		$data['title'] = 'Daftar Surat';
 		$data['surats'] = $this->Surat_model->read($limit, $start);
 		$this->load->view('surat/list_surat', $data);
 	}
 
 	public function approved()
 	{
+		$data['title'] = 'Daftar Surat yang Disetujui';
 		$data['surats'] = $this->Surat_model->read_by_approved();
-		$this->load->view('surat/list_surat', $data);
+		$this->load->view('surat/surat_disetujui', $data);
+	}
+
+	public function checked()
+	{
+		if (!$this->session->userdata('email')) redirect('auth/login');
+		$data['title'] = 'Daftar Surat yang Diperiksa';
+		$data['surats'] = $this->Surat_model->read_by_checked();
+		$this->load->view('surat/surat_diperiksa', $data);
+	}
+
+	public function rejected()
+	{
+		if (!$this->session->userdata('email')) redirect('auth/login');
+		$data['title'] = 'Daftar Surat yang Ditolak';
+		$data['surats'] = $this->Surat_model->read_by_rejected();
+		$this->load->view('surat/surat_ditolak', $data);
 	}
 
 	public function add()
 	{
 		if (!$this->session->userdata('email')) redirect('auth/login');
+		if ($this->session->userdata('role') != 'Pembuat' && $this->session->userdata('role') != 'Penandatangan') redirect('welcome');
 		$data['error'] = '';
 		if ($this->input->post('submit')) {
 			if ($this->Surat_model->validation()) {
-				if ($this->upload()) {
-					$fileData = $this->upload->data(); // Get file upload data
-					$this->Surat_model->create($fileData);
-					if ($this->db->affected_rows() > 0) {
-						$this->session->set_flashdata('msg', '<p style="color:green">Surat berhasil ditambah!</p>');
-					} else {
-						$this->session->set_flashdata('msg', '<p style="color:red">Surat gagal ditambah!</p>');
-					}
-					redirect('surat');
-				} else {
+				$pdfFile = $this->upload();
+				if (!$pdfFile) {
 					$data['error'] = $this->upload->display_errors();
+					$this->load->view('surat/list_surat', $data);
+					return;
 				}
+
+				$this->Surat_model->create($pdfFile);
+				if ($this->db->affected_rows() > 0) {
+					$this->session->set_flashdata('msg', '
+					<div id="alert" class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                		Surat berhasil ditambahkan!
+            		</div>
+					');
+				} else {
+					$this->session->set_flashdata('msg', '
+					<div id="alert" class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                		Surat gagal ditambahkan!
+            		</div>
+					');
+				}
+				redirect('surat');
 			}
 		}
+
+		$data['title'] = 'Tambah surat';
 		$data['user'] = $this->Users_model->read();
 		$this->load->view('surat/form_surat', $data);
 	}
@@ -64,33 +96,45 @@ class Surat extends CI_Controller
 	public function edit($surat, $legalisir)
 	{
 		if (!$this->session->userdata('email')) redirect('auth/login');
+		if ($this->session->userdata('role') != 'Pembuat' && $this->session->userdata('role') != 'Penandatangan') redirect('welcome');
+		$data['error'] = '';
 		if ($this->input->post('submit')) {
 			if ($this->Surat_model->validation()) {
 				$file = $this->Surat_model->read_by($legalisir);
-				// var_dump($file);
 				if (!empty($_FILES['file_surat']['name'])) {
-					if ($this->upload()) {
-						$fileData = $this->upload->data(); // Get file upload data
-						$fileSurat = $fileData['file_name'];
-					} else {
+					$newPdfFile = $this->upload();
+					if (!$newPdfFile) {
 						$data['error'] = $this->upload->display_errors();
-						$this->load->view('surat/form_surat', $data);
+						$this->load->view('users_surat/settings', $data);
 						return;
 					}
 				} else {
-					$fileSurat = $file->file_surat;
+					$newPdfFile = $file->file_surat;
 				}
 
-				$this->Surat_model->update($surat, $legalisir, $fileSurat);
-				var_dump($this->db->affected_rows());
+				$this->Surat_model->update($surat, $legalisir, $newPdfFile);
 				if ($this->db->affected_rows() == 0) {
-					$this->session->set_flashdata('msg', '<p style ="color:green">Surat berhasil diubah</p>');
+					$this->session->set_flashdata('msg', '
+					<div id="alert" class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                		Surat berhasil diubah!
+            		</div>
+					');
 				} else {
-					$this->session->set_flashdata('msg', '<p style ="color:red">Surat gagal diubah</p>');
+					$this->session->set_flashdata('msg', '
+					<div id="alert" class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                		Surat gagal diubah!
+            		</div>
+					');
 				}
-				redirect('surat');
+				if ($file->status_surat == "Ditolak") {
+					redirect('surat/rejected');
+				} else {
+					redirect('surat');
+				}
 			}
 		}
+
+		$data['title'] = 'Ubah Data Surat';
 		$data['user'] = $this->Users_model->read();
 		$data['surat'] = $this->Surat_model->read_by($legalisir);
 		$this->load->view('surat/form_surat', $data);
@@ -99,37 +143,48 @@ class Surat extends CI_Controller
 	public function delete($surat, $pengesahan)
 	{
 		if (!$this->session->userdata('email')) redirect('auth/login');
+		if ($this->session->userdata('role') != 'Pembuat' && $this->session->userdata('role') != 'Penandatangan') redirect('welcome');
 		$this->Surat_model->delete($surat, $pengesahan);
 		if ($this->db->affected_rows() > 0) {
-			$this->session->set_flashdata('msg', '<p style ="color:green">Surat berhasil dihapus</p>');
+			$this->session->set_flashdata('msg', '
+			<div id="alert" class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                Surat berhasil dihapus!
+            </div>
+			');
 		} else {
-			$this->session->set_flashdata('msg', '<p style ="color:red">Surat gagal dihapus</p>');
+			$this->session->set_flashdata('msg', '
+			<div id="alert" class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                Surat gagal dihapus!
+            </div>
+			');
 		}
 		redirect('surat');
 	}
 
-	// 	public function changephoto($id)
-	//     {
-	//         if (!$this->session->userdata('username'))
-	//             redirect('auth023/login'); //filter LOGIN
+	public function resubmit($surat, $legalisir)
+	{
+		if (!$this->session->userdata('email')) redirect('auth/login');
+		if ($this->session->userdata('role') != 'Pembuat' && $this->session->userdata('role') != 'Penandatangan') redirect('welcome');
+		$this->Surat_model->resubmit($surat, $legalisir);
+		$this->session->set_flashdata('msg', '
+		<div id="alert" class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+            Surat diajukan lagi!
+        </div>
+		');
+		redirect('surat');
+		$data['title'] = 'Ubah Data Surat';
+	}
 
-	//         // Load the cat data by id
-	//         $data['cat'] = $this->Cats023_model->read_by($id);
-
-	//         if ($this->input->post('upload')) {
-	//             if ($this->upload()) { // Jika upload berhasil
-	//                 $this->Cats023_model->changephoto($this->upload->data('file_name'), $id); // Ubah data foto di DB
-	//                 $this->session->set_userdata('cat_photo', $this->upload->data('file_name')); // Perbarui data session dengan URL foto yang baru diunggah
-	//                 $this->session->set_flashdata('msg', '<p style="color:lime">Photo successfully changed!</p>'); // Pesan sukses
-
-	//                 redirect('cats023'); // Redirect ke halaman daftar kucing setelah berhasil mengunggah foto
-	//             } else {
-	//                 $data['error'] = $this->upload->display_errors(); // Jika upload gagal
-	//             }
-	//         }
-	//         // Jika belum submit form, tampilkan halaman upload foto
-	//         $this->load->view('cats023/cat_photo_023', $data);
-	//     }
+	private function generateRandomString($length = 10)
+	{
+		$characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$charactersLength = strlen($characters);
+		$randomString = '';
+		for ($i = 0; $i < $length; $i++) {
+			$randomString .= $characters[rand(0, $charactersLength - 1)];
+		}
+		return $randomString;
+	}
 
 	public function upload()
 	{
@@ -140,6 +195,36 @@ class Surat extends CI_Controller
 		$config['max_height'] 		= '768';
 
 		$this->load->library('upload', $config);
-		return $this->upload->do_upload('file_surat');
+		// return $this->upload->do_upload('file_surat');
+
+		if ($this->upload->do_upload('file_surat')) {
+			// Jika upload berhasil, ambil data file yang diunggah
+			$upload_data = $this->upload->data();
+			$pdfFileName = $upload_data['file_name']; // Nama file yang diunggah
+
+			// Rename nama file
+			$extension = pathinfo($pdfFileName, PATHINFO_EXTENSION);
+			$baseName = pathinfo($pdfFileName, PATHINFO_FILENAME);
+			$fixPdfFileName = $baseName . "_" . $this->generateRandomString() . "." . $extension;
+
+			// Path file sebelum rename
+			$oldFilePath = $config['upload_path'] . $pdfFileName;
+
+			// Path file setelah rename
+			$newFilePath = $config['upload_path'] . $fixPdfFileName;
+
+			// Lakukan proses rename
+			if (rename($oldFilePath, $newFilePath)) {
+				// Jika rename berhasil, kembalikan nama file yang baru
+				return $fixPdfFileName;
+			} else {
+				// Jika rename gagal, tampilkan pesan error atau lakukan penanganan kesalahan lainnya
+				$this->upload->set_error('Failed to rename uploaded file.');
+				return false;
+			}
+		} else {
+			// Jika upload gagal, kembalikan false
+			return false;
+		}
 	}
 }

@@ -24,7 +24,6 @@ class Users_model extends CI_Model
             return FALSE;
     }
 
-    // fungsi untuk menyimpan data cats di tabel cats
     public function create()
     {
         $data = array(
@@ -39,7 +38,6 @@ class Users_model extends CI_Model
         $this->db->insert('user', $data);
     }
 
-    // fungsi untuk menampilkan semua data cats
     public function read()
     {
         $this->db->where('status', '1');
@@ -54,7 +52,6 @@ class Users_model extends CI_Model
         return $query->result();
     }
 
-    // fungsi untuk menampilkan data cats sesuai id
     public function read_by($id)
     {
         $this->db->where('id_user', $id);
@@ -69,7 +66,6 @@ class Users_model extends CI_Model
         return $query->row();
     }
 
-    // fungsi untuk edit data cats sesuai id
     public function update($id, $foto)
     {
         $this->db->where('id_user', $id);
@@ -82,8 +78,10 @@ class Users_model extends CI_Model
             $new_password = password_hash($new_password_input, PASSWORD_DEFAULT,);
         }
 
-        if ($foto !== 'default.png') {
-            unlink('./assets/users-img/' . $foto); // menghapus foto lama
+        if ($foto !== $query->row()->foto_profil) {
+            if ($query->row()->foto_profil !== 'default.png') {
+                unlink('./assets/users-img/' . $query->row()->foto_profil); // menghapus foto lama
+            }
         }
 
         $data = array(
@@ -97,11 +95,11 @@ class Users_model extends CI_Model
             'password' => $new_password
             // 'password' => password_hash($this->input->post('password_baru'), PASSWORD_DEFAULT,)
         );
+
         $this->db->where('id_user', $id);
         $this->db->update('user', $data);
     }
 
-    // fungsi untuk delete data cats sesuai id
     public function nonactive($id)
     {
         $this->db->set('status', '0');
@@ -128,8 +126,10 @@ class Users_model extends CI_Model
             $new_password = password_hash($new_password_input, PASSWORD_DEFAULT,);
         }
 
-        if ($foto !== 'default.png') {
-            unlink('./assets/users-img/' . $foto); // menghapus foto lama
+        if ($foto !== $query->row()->foto_profil) {
+            if ($query->row()->foto_profil !== 'default.png') {
+                unlink('./assets/users-img/' . $query->row()->foto_profil); // menghapus foto lama
+            }
         }
 
         $data = array(
@@ -143,21 +143,5 @@ class Users_model extends CI_Model
         );
         $this->db->where('id_user', $id);
         $this->db->update('user', $data);
-    }
-
-    //fungsi untuk reset Password kembali ke default = usertype
-    public function resetpass($id)
-    {
-        $this->db->where('id_user', $id);
-        $query = $this->db->get('user');
-
-        if ($query->num_rows() > 0) {
-            $user = $query->row();
-            $new_password = password_hash($user->usertype_, PASSWORD_DEFAULT);
-
-            $this->db->set('password', $new_password);
-            $this->db->where('id_user', $id);
-            $this->db->update('user');
-        }
     }
 }

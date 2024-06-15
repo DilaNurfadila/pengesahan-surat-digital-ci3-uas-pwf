@@ -28,33 +28,46 @@ class Auth extends CI_Controller
                             'alamat' => $login->alamat,
                             'nohp' => $login->no_hp,
                             'posisi' => $login->posisi,
-                            'role' => $login->user_role
+                            'role' => $login->user_role,
+                            'fotoProfil' => $login->foto_profil,
                         );
                         if ($this->db->affected_rows() > 0) {
-                            $this->session->set_flashdata('msg1', '<p style ="color:green"> Login berhasil! </p>');
+                            $this->session->set_flashdata('msg', '
+                            <div id="alert" style="padding: 1rem; margin-bottom: 1rem; color: rgb(153 27 27); border-radius: 0.5rem; background-color: rgb(254 242 242);" role="alert">
+                                Login berhasil!
+                            </div>
+                            ');
                         }
                         $this->session->set_userdata($data);
                         redirect('welcome');
                     } else {
-                        $this->session->set_flashdata('msg', '<p style ="color:red"> Email atau password salah! </p>');
+                        $this->session->set_flashdata('msg', '
+                        <div id="alert" style="padding: 1rem; margin-bottom: 1rem; color: rgb(153 27 27); border-radius: 0.5rem; background-color: rgb(254 242 242);" role="alert">
+                            Email atau password salah!
+                        </div>
+                        ');
                     }
                 }
             } else {
-                $this->session->set_flashdata('msg', '<p style ="color:red"> Pengguna sudah tidak aktif! </p>');
+                $this->session->set_flashdata('msg', '
+                <div id="alert" style="padding: 1rem; margin-bottom: 1rem; color: rgb(153 27 27); border-radius: 0.5rem; background-color: rgb(254 242 242);" role="alert">
+                    Pengguna tidak ditemukan atau sudah tidak aktif!
+                </div>
+                ');
             }
         }
-        $this->load->view('auth/form_login');
+        $data['title'] = 'Login';
+        $this->load->view('auth/form_login', $data);
     }
 
     public function logout()
     {
         $this->session->sess_destroy();
-        redirect('welcome');
+        redirect('auth/login');
     }
 
     public function validation($type)
     {
-
         if ($type == 'login') {
             $this->form_validation->set_rules('email', 'Email', 'required');
             $this->form_validation->set_rules('password', 'Password', 'required');

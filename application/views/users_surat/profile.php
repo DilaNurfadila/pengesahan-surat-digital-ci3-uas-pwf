@@ -1,56 +1,74 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <!DOCTYPE html>
-<html lang="en">
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <?php include 'template/head.php' ?>
 </head>
 
 <body>
-    <?php include 'template/siderbar.php'; ?>
-
-    <?php include 'template/navbar.php'; ?>
-
-    <div style="color: red;"><?= validation_errors() ?></div>
-    <!-- <div style="color: red"><?= $error; ?></div> -->
-    <div class="form-container">
-        <table border="1">
-            <tr>
-                <td>Foto Profil</td>
-                <td>
-                    <p align="center"><img src=" <?= base_url('/assets/users-img/' . $user->foto_profil) ?>" alt="Foto Profil" width="100" height="100"></p>
-                </td>
-            </tr>
-            <tr>
-                <td>Nama Lengkap</td>
-                <td><?= $user->nama_lengkap ?></td>
-            </tr>
-            <tr>
-                <td>Email</td>
-                <td><?= $user->email ?></td>
-            </tr>
-            <tr>
-                <td>Alamat</td>
-                <td><?= $user->alamat ?></td>
-            </tr>
-            <tr>
-                <td>Nomor Telepon</td>
-                <td><?= $user->no_hp ?></td>
-            </tr>
-            <tr>
-                <td>Posisi</td>
-                <td><?= $user->posisi ?></td>
-            </tr>
-            <tr>
-                <td>Role</td>
-                <td><?= $user->user_role ?></td>
-            </tr>
-        </table>
-        <br>
-        <!-- <a href="<?= site_url('surat') ?>"><input type="button" value="CANCEL"></a> -->
+    <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
+        <?php include 'template/sidebar.php'; ?>
+        <div class="flex flex-col flex-1 w-full">
+            <?php include 'template/navbar.php'; ?>
+            <main class="h-full pb-16 overflow-y-auto">
+                <div class="container px-6 mx-auto grid">
+                    <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                        Profile
+                    </h2>
+                    <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                        <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
+                            <div class="w-full overflow-x-auto">
+                                <table class="w-full whitespace-no-wrap">
+                                    <thead>
+                                        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                            <th class="px-4 py-3">Informasi</th>
+                                            <th class="px-4 py-3">Detail</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                        <tr class="text-gray-700 dark:text-gray-400">
+                                            <td class="px-4 py-3">Nama</td>
+                                            <td class="px-4 py-3 text-sm">
+                                                <div class="flex items-center text-sm">
+                                                    <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                                                        <img class="object-cover w-full h-full rounded-full" src="<?= base_url('/assets/users-img/' . $user->foto_profil) ?>" alt="" loading="lazy" />
+                                                        <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                                                    </div>
+                                                    <div>
+                                                        <p class="font-semibold"><?= $user->nama_lengkap ?></p>
+                                                        <p class="text-xs text-gray-600 dark:text-gray-400">
+                                                            <?= $user->posisi ?>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="text-gray-700 dark:text-gray-400">
+                                            <td class="px-4 py-3">Email</td>
+                                            <td class="px-4 py-3 text-sm"><?= $user->email ?></td>
+                                        </tr>
+                                        <tr class="text-gray-700 dark:text-gray-400">
+                                            <td class="px-4 py-3">Alamat</td>
+                                            <td class="px-4 py-3 text-sm"><?= $user->alamat ?></td>
+                                        </tr>
+                                        <tr class="text-gray-700 dark:text-gray-400">
+                                            <td class="px-4 py-3">Nomor Telepon</td>
+                                            <td class="px-4 py-3 text-sm"><?= $user->no_hp ?></td>
+                                        </tr>
+                                        <tr class="text-gray-700 dark:text-gray-400">
+                                            <td class="px-4 py-3">Role</td>
+                                            <td class="px-4 py-3 text-sm"><?= $user->user_role ?></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+            </main>
+        </div>
     </div>
+    <script src="<?= base_url('assets/js/script.js') ?>"></script>
 </body>
 
 </html>
