@@ -61,12 +61,18 @@ class Surat extends CI_Controller
 		if (!$this->session->userdata('email')) redirect('auth/login');
 		if ($this->session->userdata('role') != 'Pembuat' && $this->session->userdata('role') != 'Penandatangan') redirect('welcome');
 		$data['error'] = '';
+		$data['title'] = 'Tambah surat';
 		if ($this->input->post('submit')) {
 			if ($this->Surat_model->validation()) {
 				$pdfFile = $this->upload();
 				if (!$pdfFile) {
 					$data['error'] = $this->upload->display_errors();
-					$this->load->view('surat/list_surat', $data);
+					$this->session->set_flashdata('msg', '
+					<div id="alert" class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">' .
+						$data["error"] .
+						'</div>
+					');
+					redirect('surat');
 					return;
 				}
 
@@ -88,7 +94,6 @@ class Surat extends CI_Controller
 			}
 		}
 
-		$data['title'] = 'Tambah surat';
 		$data['user'] = $this->Users_model->read();
 		$this->load->view('surat/form_surat', $data);
 	}

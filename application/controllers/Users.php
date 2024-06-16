@@ -163,8 +163,8 @@ class Users extends CI_Controller
         $config['upload_path']        = './assets/users-img/';
         $config['allowed_types']     = 'jpg|png';
         $config['max_size']         = '2000';
-        $config['max_width']         = '1024';
-        $config['max_height']         = '768';
+        $config['max_width']         = '2000';
+        $config['max_height']         = '2000';
 
         $this->load->library('upload', $config);
         // return $this->upload->do_upload('foto_profil');
