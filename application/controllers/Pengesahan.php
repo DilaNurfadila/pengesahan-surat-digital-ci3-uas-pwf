@@ -46,7 +46,7 @@ class Pengesahan extends CI_Controller
 
     public function detail_surat($id)
     {
-        if ($this->session->userdata('role') != 'Pembuat' && $this->session->userdata('role') != 'Penandatangan') redirect('welcome');
+        if ($this->session->userdata('role') == 'Admin') redirect('welcome');
         $data['validation'] = $this->Pengesahan_model->read_by_id($id);
         $data['title'] = "Informasi Surat";
         $this->load->view('surat/detail_surat', $data);

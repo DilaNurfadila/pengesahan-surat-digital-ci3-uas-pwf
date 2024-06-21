@@ -12,6 +12,7 @@
     } else {
         $user = 'guest';
     } ?>
+
     <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
         <?php include 'template/sidebar.php'; ?>
         <div class="flex flex-col flex-1 w-full">
@@ -21,12 +22,8 @@
             </main>
         </div>
     </div>
+    <script src="<?= base_url('assets/js/script.js') ?>"></script>
 </body>
-<script>
-    function toggleDropdown() {
-        var dropdown = document.getElementById('dropdown');
-        dropdown.classList.toggle('hidden');
-    }
-</script>
+
 
 </html>
