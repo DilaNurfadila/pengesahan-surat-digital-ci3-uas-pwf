@@ -3,19 +3,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Surat_model extends CI_Model
 {
-
 	//fungsi untuk validasi data
 	public function validation()
 	{
 		$this->load->library('form_validation');
-
-		// $this->form_validation->set_rules('id_user', 'Id User' . 'required | numeric');
 		$this->form_validation->set_rules('jenis_surat', 'Jenis Surat', 'required');
 		$this->form_validation->set_rules('judul_surat', 'Judul Surat', 'required');
 		$this->form_validation->set_rules('tanggal_surat', 'Tanggal Surat' . 'required | numeric');
 		$this->form_validation->set_rules('nomor_agenda', 'Nomor Agenda' . 'required | numeric');
 		$this->form_validation->set_rules('tanggal_agenda', 'Tanggal Agenda' . 'required | numeric');
-		// $this->form_validation->set_rules('file_surat', 'File Surat', 'required');
 		$this->form_validation->set_rules('tujuan_surat', 'Tujuan Surat', 'required');
 		$this->form_validation->set_rules('perihal_surat', 'Perihal Surat', 'required');
 
@@ -25,7 +21,6 @@ class Surat_model extends CI_Model
 			return FALSE;
 	}
 
-	// fungsi untuk menyimpan data cats di tabel cats
 	public function create($fileData)
 	{
 		$data_surat = array(
@@ -51,12 +46,8 @@ class Surat_model extends CI_Model
 		$this->db->insert('pengesahan', $data_pengesahan);
 	}
 
-	// fungsi untuk menampilkan semua data cats
 	public function read($limit, $start)
 	{
-		// $this->db->where('sold_031', 0); //untuk sortir data yang akan ditampilkan jika belum sold
-		// $this->db->distinct();
-		// $this->db->select('pengesahan.*, surat.judul_surat, surat.status_surat, surat.id_surat, user.nama_lengkap');
 		$this->db->limit($limit, $start);
 		$this->db->join('surat', 'surat.id_surat = pengesahan.id_surat');
 		$this->db->join('user', 'user.id_user = surat.id_user');
@@ -69,7 +60,6 @@ class Surat_model extends CI_Model
 		return $query->result();
 	}
 
-	// fungsi untuk menampilkan data cats sesuai id
 	public function read_by($id)
 	{
 		$this->db->join('surat', 'pengesahan.id_surat = surat.id_surat');

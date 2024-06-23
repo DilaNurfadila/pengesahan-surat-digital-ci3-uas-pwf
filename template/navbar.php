@@ -1,24 +1,3 @@
-<!-- <ul>
-    <php if ($this->session->has_userdata('email')) : // Check if $login is set and true 
-    ?>
-        <li class="flex">
-            <a href="<= site_url('users/detail_user/' . $this->session->userdata("iduser")) ?>">Profile</a>
-        </li>
-        <li class="flex">
-            <a href="<= site_url('users/setting/' . $this->session->userdata("iduser")) ?>">Settings</a>
-        </li>
-        <li>
-            <a href="<= site_url("auth/logout") ?>" onclick="return confirm('Are you sure ?')">Log Out</a>
-        </li>
-    <php else : ?>
-        <li>
-            <a href="<= site_url('auth/login') ?>">
-                Log In
-            </a>
-        </li>
-    <php endif; ?>
-</ul> -->
-
 <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
     <div class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
         <!-- Mobile hamburger -->
@@ -95,7 +74,6 @@
                                 </a>
 
                             </li>
-
                         <?php else : ?>
                             <li>
                                 <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="<?= site_url('auth/login') ?>">

@@ -3,11 +3,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Pengesahan extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
-        // if (!$this->session->userdata('email')) redirect('auth/login');
         $this->load->model('Pengesahan_model');
         $this->load->library('form_validation');
         $this->load->library('Ciqrcode');
@@ -25,7 +23,6 @@ class Pengesahan extends CI_Controller
     public function surat_legalisir($kunci)
     {
         $kode = site_url('pengesahan/detail_qrcode/' . $kunci);
-        // $link = "<a href='$kode'>$kode</a>";
         //render  qr code dengan format gambar PNG
         QRcode::png(
             $kode,
@@ -38,7 +35,6 @@ class Pengesahan extends CI_Controller
 
     public function detail_qrcode($key)
     {
-        // if ($this->session->userdata('role') != 'Pembuat' && $this->session->userdata('role') != 'Penandatangan') redirect('welcome');
         $data['validation'] = $this->Pengesahan_model->read_by($key);
         $data['title'] = 'Daftar Surat yang Disetujui';
         $this->load->view('pengesahan/lihat_surat', $data);
@@ -68,8 +64,6 @@ class Pengesahan extends CI_Controller
         </div>
         ');
         redirect('pengesahan');
-
-        // $data['validation'] = $this->Users_model->read_by($id);
     }
 
     public function reject_check($surat, $pengesahan)

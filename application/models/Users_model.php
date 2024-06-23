@@ -3,20 +3,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Users_model extends CI_Model
 {
-
     //fungsi untuk validasi data
-
     public function validation()
     {
         $this->load->library('form_validation');
-
         $this->form_validation->set_rules('namalengkap', 'Nama Lengkap', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required');
         $this->form_validation->set_rules('alamat', 'Alamat', 'required');
         $this->form_validation->set_rules('nohp', 'No HP', 'required');
         $this->form_validation->set_rules('posisi', 'Posisi', 'required');
-        // $this->form_validation->set_rules('role', 'User Role', 'required');
-        // $this->form_validation->set_rules('password_', 'Password', 'required');
 
         if ($this->form_validation->run())
             return TRUE;
@@ -93,7 +88,6 @@ class Users_model extends CI_Model
             'posisi' => $this->input->post('posisi'),
             'user_role' => $this->input->post('role'),
             'password' => $new_password
-            // 'password' => password_hash($this->input->post('password_baru'), PASSWORD_DEFAULT,)
         );
 
         $this->db->where('id_user', $id);

@@ -52,14 +52,17 @@
                         <div class="input-group mb-1">
                             <input type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Password" name="password" require>
                         </div>
-                        <div class="input-group mb-5 d-flex justify-content-between">
+                        <div class="input-group mb-2 d-flex justify-content-between">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="formCheck">
                                 <label for="formCheck" class="form-check-label text-secondary"><small>Remember Me</small></label>
                             </div>
                         </div>
-                        <div class="input-group mb-5">
+                        <div class="input-group mb-3">
                             <button class="btn btn-lg btn-primary w-100 fs-6" type="submit" value="LOGIN" name="login">Login</button>
+                        </div>
+                        <div class="input-group mb-5">
+                            <a href="<?= base_url() ?>" class="btn btn-lg btn-warning w-100 fs-6">Back to home</a>
                         </div>
                     </form>
                 </div>

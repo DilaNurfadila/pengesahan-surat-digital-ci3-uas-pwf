@@ -25,7 +25,6 @@
                     <p class="mb-3 flex items-center dark:text-white"><i class="far fa-check-circle text-blue-500 mr-3"></i>Upload dokumen dan di pastikan pdf</p>
                     <p class="mb-3 flex items-center dark:text-white"><i class="far fa-check-circle text-blue-500 mr-3"></i>Menunggu proses persetujuan</p>
                     <p class="mb-3 flex items-center dark:text-white"><i class="far fa-check-circle text-blue-500 mr-3"></i>Unduh atau salin QR Code ke dalam file surat</p>
-                    <a class="btn bg-blue-500 text-white py-3 px-5 mt-3 inline-block rounded" href="">Read More</a>
                 </div>
                 <div class="w-full lg:w-1/2">
                     <div class="flex gap-3 mb-4">
