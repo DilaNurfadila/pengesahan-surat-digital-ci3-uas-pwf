@@ -53,7 +53,11 @@
                                                         <p align="center"><img src="<?= base_url('/assets/users-img/' . $user->foto_profil) ?>" alt="Foto profil" width="50" height="50"></p>
                                                     </td>
                                                     <td class="px-4 py-3 text-sm dark:text-gray-400"><?= $user->posisi ?></td>
-                                                    <td class="px-4 py-3 text-sm dark:text-gray-400"><?= $user->user_role ?></td>
+                                                    <?php if ($user->user_role == "Pemeriksa_Penandatangan") { ?>
+                                                        <td class="px-4 py-3 text-sm dark:text-gray-400">Pemeriksa dan Penandatangan</td>
+                                                    <?php } else { ?>
+                                                        <td class="px-4 py-3 text-sm dark:text-gray-400"><?= $user->user_role ?></td>
+                                                    <?php } ?>
                                                     <?php if ($user->status == '1') { ?>
                                                         <td class="px-4 py-3 text-sm dark:text-gray-400"><a href="<?= site_url('users/edit/' . $user->id_user) ?>">EDIT</a></td>
                                                         <td class="px-4 py-3 text-sm dark:text-gray-400"><a href="<?= site_url('users/nonactive/' . $user->id_user) ?>" onclick="return confirm('Are you sure ?')">NONAKTIFKAN</a></td>

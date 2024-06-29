@@ -58,7 +58,11 @@
                                         </tr>
                                         <tr class="text-gray-700 dark:text-gray-400">
                                             <td class="px-4 py-3">Role</td>
-                                            <td class="px-4 py-3 text-sm"><?= $user->user_role ?></td>
+                                            <?php if ($user->user_role == "Pemeriksa_Penandatangan") { ?>
+                                                <td class="px-4 py-3 text-sm">Pemeriksa dan Penandatangan</td>
+                                            <?php } else { ?>
+                                                <td class="px-4 py-3 text-sm"><?= $user->user_role ?></td>
+                                            <?php } ?>
                                         </tr>
                                     </tbody>
                                 </table>

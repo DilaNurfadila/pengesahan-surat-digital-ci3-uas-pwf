@@ -127,22 +127,14 @@ class Pengesahan_model extends CI_Model
     {
         date_default_timezone_set('Asia/Jakarta');
 
-        $length = 10;
-        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[random_int(0, $charactersLength - 1)];
-        }
-
         $data_pengesahan = array(
             'tanggal_diperiksa' => $tanggal_diperiksa,
             'tanggal_ditandatangan' => date('Y-m-d H:i:s'),
-            'kunci' => $randomString
+            // 'kunci' => $randomString
         );
 
         $data_surat = array(
-            'nomor_agenda' => $this->input->post('nomor_agenda'),
+            // 'nomor_agenda' => $this->input->post('nomor_agenda'),
             'status_surat' => 'Disetujui'
         );
 
@@ -203,11 +195,27 @@ class Pengesahan_model extends CI_Model
         }
     }
 
-    public function delete($id_surat, $id_pengesahan)
+    public function agenda_number($id_surat, $id_pengesahan)
     {
+        $length = 10;
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[random_int(0, $charactersLength - 1)];
+        }
+
+        $data_pengesahan = array(
+            'kunci' => $randomString
+        );
+
+        $data_surat = array(
+            'nomor_agenda' => $this->input->post('nomor_agenda'),
+        );
+
         $this->db->where('id_legalisir', $id_pengesahan);
-        $this->db->delete('pengesahan');
+        $this->db->update('pengesahan', $data_pengesahan);
         $this->db->where('id_surat', $id_surat);
-        $this->db->delete('surat');
+        $this->db->update('surat', $data_surat);
     }
 }

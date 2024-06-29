@@ -38,9 +38,8 @@
                                             $pembuat = $surat->nama_pembuat == $this->session->userdata("namalengkap");
                                             $pemeriksa = $surat->nama_pemeriksa == $this->session->userdata("namalengkap");
                                             $penandatangan = $surat->nama_penandatangan == $this->session->userdata("namalengkap");
-                                            $superadmin = $this->session->userdata("role") == "Superadmin";
 
-                                            if ($pembuat || $pemeriksa || $penandatangan || $superadmin) {
+                                            if ($pembuat || $pemeriksa || $penandatangan) {
                                     ?>
                                                 <tr class="text-gray-700 dark:text-gray-400">
                                                     <td class="px-4 py-3 text-sm dark:text-gray-400 text-center"><?= $i++ ?></td>
@@ -51,8 +50,6 @@
                                                         <td class="px-4 py-3 text-sm dark:text-gray-400">Anda sebagai pemeriksa</td>
                                                     <?php } else if ($penandatangan) { ?>
                                                         <td class="px-4 py-3 text-sm dark:text-gray-400">Anda sebagai penandatangan</td>
-                                                    <?php } else if ($superadmin) { ?>
-                                                        <td class="px-4 py-3 text-sm dark:text-gray-400">Anda superadmin</td>
                                                     <?php } ?>
                                                     <td class="px-4 py-3 text-sm dark:text-gray-400 text-center"><?= $surat->status_surat ?></td>
                                                     <td class="px-4 py-3 text-sm dark:text-gray-400 text-center"><?= $surat->keterangan ?></td>

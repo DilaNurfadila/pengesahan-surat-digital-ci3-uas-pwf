@@ -79,19 +79,13 @@
                                     Role
                                 </span>
                                 <div class="mt-2">
-                                    <?php if ($this->session->userdata('role') == 'Superadmin') { ?>
-                                        <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
-                                            <input type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-check-input" name="role" id="admin" value="Admin" <?= set_radio('user_role', 'Admin', $role == 'Admin' ? TRUE : FALSE) ?> required />
-                                            <span class="ml-2 form-check-label" for="admin">Admin</span>
-                                        </label>
-                                    <?php } ?>
-                                    <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
+                                    <label class="inline-flex items-center mr-6 text-gray-600 dark:text-gray-400">
                                         <input type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-check-input" name="role" id="pembuat" value="Pembuat" <?= set_radio('user_role', 'Pembuat', $role == 'Pembuat' ? TRUE : FALSE) ?> required />
                                         <span class="ml-2 form-check-label">Pembuat</span>
                                     </label>
-                                    <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
-                                        <input type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-check-input" name="role" id="penandatangan" value="Penandatangan" <?= set_radio('user_role', 'Penandatangan', $role == 'Penandatangan' ? TRUE : FALSE) ?> required />
-                                        <span class="ml-2 form-check-label">Penandatangan</span>
+                                    <label class="inline-flex items-center mr-6 text-gray-600 dark:text-gray-400">
+                                        <input type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-check-input" name="role" id="pemeriksa_penandatangan" value="Pemeriksa_Penandatangan" <?= set_radio('user_role', 'Pemeriksa_Penandatangan', $role == 'Pemeriksa_Penandatangan' ? TRUE : FALSE) ?> required />
+                                        <span class="ml-2 form-check-label">Pemeriksa/Penandatangan</span>
                                     </label>
                                 </div>
                             </div><br>

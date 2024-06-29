@@ -16,7 +16,7 @@
                     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
                         Daftar Surat
                     </h2>
-                    <?php if ($this->session->userdata("role") == "Pembuat" || $this->session->userdata("role") == "Admin") { ?>
+                    <?php if ($this->session->userdata("role") == "Pembuat") { ?>
                         <div>
                             <button class="flex items-center justify-between px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" onclick="location.href='<?= site_url('surat/add') ?>'">
                                 <span>Tambah</span>
@@ -32,7 +32,7 @@
                                         <th class=" px-4 py-3">No</th>
                                         <th class="px-4 py-3">Judul Surat</th>
                                         <th class="px-4 py-3">Status</th>
-                                        <th class="px-4 py-3" colspan="3">Action</th>
+                                        <th class="px-4 py-3" colspan="4">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -40,25 +40,25 @@
                                         $i = 1;
                                         foreach ($surats as $surat) {
                                             if ($this->session->userdata('email') == $surat->email) {
-                                                if ($surat->status_surat == "Menunggu" || $surat->status_surat == "Diproses") {
                                     ?>
-                                                    <tr class="text-gray-700 dark:text-gray-400">
-                                                        <td class="px-4 py-3 text-sm dark:text-gray-400 text-center"><?= $i++ ?></td>
-                                                        <td class="px-4 py-3 text-sm dark:text-gray-400"><?= $surat->judul_surat ?></td>
+                                                <tr class="text-gray-700 dark:text-gray-400">
+                                                    <td class="px-4 py-3 text-sm dark:text-gray-400 text-center"><?= $i++ ?></td>
+                                                    <td class="px-4 py-3 text-sm dark:text-gray-400"><?= $surat->judul_surat ?></td>
 
-                                                        <td class="px-4 py-3 text-sm dark:text-gray-400"><?= $surat->status_surat ?></td>
-                                                        <?php if ($surat->tanggal_diperiksa != NULL) { ?>
-                                                            <td colspan="2" class="px-4 py-3 text-sm text-center dark:text-gray-400">Tidak bisa ubah dan hapus data setelah diperiksa</td>
-                                                        <?php } else { ?>
-                                                            <?php if ($surat->nama_pembuat == $this->session->userdata("namalengkap")) { ?>
-                                                                <td class="px-4 py-3 text-sm text-center dark:text-gray-400"><a href="<?= site_url('surat/edit/' . $surat->id_surat . '/' . $surat->id_legalisir) ?>">EDIT</a></td>
-                                                                <td class="px-4 py-3 text-sm text-center dark:text-gray-400"><a href="<?= site_url('surat/delete/' . $surat->id_surat . '/' . $surat->id_legalisir) ?>" onclick="return confirm('Yakin ingin menghapus?')">DELETE</a></td>
-                                                            <?php } ?>
+                                                    <td class="px-4 py-3 text-sm dark:text-gray-400"><?= $surat->status_surat ?></td>
+                                                    <?php if ($surat->status_surat == "Disetujui" && $surat->nomor_agenda == NULL) { ?>
+                                                        <td colspan="3" class="px-4 py-3 text-sm text-center dark:text-gray-400"><a href="<?= site_url('pengesahan/agenda_number/' . $surat->id_surat . '/' . $surat->id_legalisir) ?>">ISI NOMOR AGENDA</a></td>
+                                                    <?php } else if ($surat->tanggal_diperiksa != NULL) { ?>
+                                                        <td colspan="2" class="px-4 py-3 text-sm text-center dark:text-gray-400">Tidak bisa ubah dan hapus data setelah diperiksa</td>
+                                                    <?php } else if ($surat->tanggal_diperiksa == NULL) { ?>
+                                                        <?php if ($surat->nama_pembuat == $this->session->userdata("namalengkap")) { ?>
+                                                            <td class="px-4 py-3 text-sm text-center dark:text-gray-400"><a href="<?= site_url('surat/edit/' . $surat->id_surat . '/' . $surat->id_legalisir) ?>">EDIT</a></td>
+                                                            <td class="px-4 py-3 text-sm text-center dark:text-gray-400"><a href="<?= site_url('surat/delete/' . $surat->id_surat . '/' . $surat->id_legalisir) ?>" onclick="return confirm('Yakin ingin menghapus?')">DELETE</a></td>
                                                         <?php } ?>
-                                                        <td colspan="3" class="px-4 py-3 text-sm text-center dark:text-gray-400"><a href="<?= site_url('pengesahan/detail_surat/' . $surat->id_legalisir) ?>">DETAIL SURAT</a></td>
-                                                    </tr>
+                                                    <?php }  ?>
+                                                    <td colspan="3" class="px-4 py-3 text-sm text-center dark:text-gray-400"><a href="<?= site_url('pengesahan/detail_surat/' . $surat->id_legalisir) ?>">DETAIL SURAT</a></td>
+                                                </tr>
                                         <?php }
-                                            }
                                         } ?>
                                     <?php } else { ?>
                                         <tr>

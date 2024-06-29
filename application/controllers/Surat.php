@@ -15,7 +15,7 @@ class Surat extends CI_Controller
 
 	public function index()
 	{
-		if ($this->session->userdata('role') != 'Pembuat' && $this->session->userdata('role') != 'Penandatangan') redirect('welcome');
+		if ($this->session->userdata('role') != 'Pembuat' && $this->session->userdata('role') != 'Pemeriksa_Penandatangan') redirect('welcome');
 		if (!$this->session->userdata('email')) redirect('auth/login');
 		$config['base_url'] = site_url('surat/index');
 		$config['total_rows'] = $this->db->count_all('surat');
@@ -58,7 +58,7 @@ class Surat extends CI_Controller
 	public function add()
 	{
 		if (!$this->session->userdata('email')) redirect('auth/login');
-		if ($this->session->userdata('role') != 'Pembuat' && $this->session->userdata('role') != 'Penandatangan') redirect('welcome');
+		if ($this->session->userdata('role') != 'Pembuat' && $this->session->userdata('role') != 'Pemeriksa_Penandatangan') redirect('welcome');
 		$data['error'] = '';
 		$data['title'] = 'Tambah surat';
 		if ($this->input->post('submit')) {
@@ -100,7 +100,7 @@ class Surat extends CI_Controller
 	public function edit($surat, $legalisir)
 	{
 		if (!$this->session->userdata('email')) redirect('auth/login');
-		if ($this->session->userdata('role') != 'Pembuat' && $this->session->userdata('role') != 'Penandatangan') redirect('welcome');
+		if ($this->session->userdata('role') != 'Pembuat' && $this->session->userdata('role') != 'Pemeriksa_Penandatangan') redirect('welcome');
 		$data['error'] = '';
 		if ($this->input->post('submit')) {
 			if ($this->Surat_model->validation()) {
@@ -147,7 +147,7 @@ class Surat extends CI_Controller
 	public function delete($surat, $pengesahan)
 	{
 		if (!$this->session->userdata('email')) redirect('auth/login');
-		if ($this->session->userdata('role') != 'Pembuat' && $this->session->userdata('role') != 'Penandatangan') redirect('welcome');
+		if ($this->session->userdata('role') != 'Pembuat' && $this->session->userdata('role') != 'Pemeriksa_Penandatangan') redirect('welcome');
 		$this->Surat_model->delete($surat, $pengesahan);
 		if ($this->db->affected_rows() > 0) {
 			$this->session->set_flashdata('msg', '
@@ -168,7 +168,7 @@ class Surat extends CI_Controller
 	public function resubmit($surat, $legalisir)
 	{
 		if (!$this->session->userdata('email')) redirect('auth/login');
-		if ($this->session->userdata('role') != 'Pembuat' && $this->session->userdata('role') != 'Penandatangan') redirect('welcome');
+		if ($this->session->userdata('role') != 'Pembuat' && $this->session->userdata('role') != 'Pemeriksa_Penandatangan') redirect('welcome');
 		$this->Surat_model->resubmit($surat, $legalisir);
 		$this->session->set_flashdata('msg', '
 		<div id="alert" class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">

@@ -39,9 +39,8 @@
                                             $pembuat = $surat->nama_pembuat == $this->session->userdata("namalengkap");
                                             $pemeriksa = $surat->nama_pemeriksa == $this->session->userdata("namalengkap");
                                             $penandatangan = $surat->nama_penandatangan == $this->session->userdata("namalengkap");
-                                            $superadmin = $this->session->userdata("role") == "Superadmin";
 
-                                            if ($pembuat || $penandatangan || $superadmin || !$this->session->has_userdata('email')) {
+                                            if ($pembuat || $penandatangan || !$this->session->has_userdata('email')) {
                                     ?>
                                                 <tr class="text-gray-700 dark:text-gray-400">
                                                     <td class="px-4 py-3 text-sm dark:text-gray-400 text-center"><?= $i++ ?></td>
@@ -51,11 +50,19 @@
                                                     <?php } else if ($surat->status_surat == "Ditolak") { ?>
                                                         <td class="px-4 py-3 text-sm dark:text-gray-400">QR code tidak akan muncul jika surat ditolak</td>
                                                     <?php } else if ($surat->status_surat == "Disetujui") { ?>
-                                                        <td align="center" class="px-4 py-3 text-sm dark:text-gray-400">
-                                                            <a href="<?= site_url('pengesahan/surat_legalisir/' . $surat->kunci); ?>" target="_blank">
-                                                                <img src="<?= site_url('pengesahan/surat_legalisir/' . $surat->kunci); ?>" alt="QR code" width="100" height="100">
-                                                            </a>
-                                                        </td>
+                                                        <?php if ($surat->nomor_agenda != NULL) { ?>
+                                                            <td align="center" class="px-4 py-3 text-sm dark:text-gray-400">
+                                                                <a href="<?= site_url('pengesahan/surat_legalisir/' . $surat->kunci); ?>" target="_blank">
+                                                                    <img src="<?= site_url('pengesahan/surat_legalisir/' . $surat->kunci); ?>" alt="QR code" width="100" height="100">
+                                                                </a>
+                                                            </td>
+                                                        <?php } else { ?>
+                                                            <?php if ($pemeriksa || $penandatangan) { ?>
+                                                                <td class="px-4 py-3 text-sm dark:text-gray-400 text-center">Nomor Agenda belum diisi oleh pembuat</td>
+                                                            <?php } else if ($pembuat) { ?>
+                                                                <td class="px-4 py-3 text-sm dark:text-gray-400 text-center">Nomor Agenda belum diisi <br> Isi <a href="<?= site_url('surat'); ?>" class="font-bold hover:underline">nomor agenda</a></td>
+                                                            <?php } ?>
+                                                        <?php } ?>
                                                     <?php } ?>
                                                     <td class="px-4 py-3 text-sm dark:text-gray-400 text-center"><?= $surat->status_surat ?></td>
                                                     <?php if ($pembuat) { ?>
@@ -64,8 +71,6 @@
                                                         <td class="px-4 py-3 text-sm dark:text-gray-400">Anda sebagai pemeriksa</td>
                                                     <?php } else if ($penandatangan) { ?>
                                                         <td class="px-4 py-3 text-sm dark:text-gray-400">Anda sebagai penandatangan</td>
-                                                    <?php } else if ($superadmin) { ?>
-                                                        <td class="px-4 py-3 text-sm dark:text-gray-400">Anda superadmin</td>
                                                     <?php } ?>
                                                 </tr>
                                         <?php }

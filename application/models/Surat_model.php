@@ -52,7 +52,8 @@ class Surat_model extends CI_Model
 		$this->db->join('surat', 'surat.id_surat = pengesahan.id_surat');
 		$this->db->join('user', 'user.id_user = surat.id_user');
 		$this->db->group_by('pengesahan.id_legalisir');
-		$this->db->where('status_surat !=', 'Disetujui');
+		$this->db->where('status_surat !=', 'Ditolak');
+		$this->db->where('nomor_agenda IS NULL');
 		$query = $this->db->get('pengesahan');
 		return $query->result();
 
@@ -73,6 +74,7 @@ class Surat_model extends CI_Model
 	{
 		$this->db->join('surat', 'pengesahan.id_surat = surat.id_surat');
 		$this->db->join('user', 'surat.id_user = user.id_user');
+		// $this->db->where('nomor_agenda IS NOT NULL');
 		$this->db->where('status_surat', 'Disetujui');
 		$query = $this->db->get('pengesahan');
 		return $query->result();

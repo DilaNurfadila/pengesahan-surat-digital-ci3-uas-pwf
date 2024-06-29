@@ -13,7 +13,7 @@ class Users extends CI_Controller
 
     public function index()
     {
-        if ($this->session->userdata('role') != 'Admin' && $this->session->userdata('role') != 'Superadmin') redirect('welcome');
+        if ($this->session->userdata('role') != 'Admin') redirect('welcome');
         $data['title'] = 'Daftar Pengguna';
         $data['users'] = $this->Users_model->read();
         $this->load->view('users_surat/user_list', $data);
@@ -28,7 +28,7 @@ class Users extends CI_Controller
 
     public function nonactive_users()
     {
-        if ($this->session->userdata('role') != 'Admin' && $this->session->userdata('role') != 'Superadmin') redirect('welcome');
+        if ($this->session->userdata('role') != 'Admin') redirect('welcome');
         $data['title'] = 'Pengguna Tidak Aktif';
         $data['users'] = $this->Users_model->read_nonactive_users();
         $this->load->view('users_surat/nonactive_user_list', $data);
@@ -36,7 +36,7 @@ class Users extends CI_Controller
 
     public function add()
     {
-        if ($this->session->userdata('role') != 'Admin' && $this->session->userdata('role') != 'Superadmin') redirect('welcome');
+        if ($this->session->userdata('role') != 'Admin') redirect('welcome');
         if ($this->input->post('submit')) {
             if ($this->Users_model->validation()) {
                 $this->Users_model->create();
@@ -63,7 +63,7 @@ class Users extends CI_Controller
 
     public function edit($id)
     {
-        if ($this->session->userdata('role') != 'Admin' && $this->session->userdata('role') != 'Superadmin') redirect('welcome');
+        if ($this->session->userdata('role') != 'Admin') redirect('welcome');
         $data['error'] = '';
         if ($this->input->post('submit')) {
             if ($this->Users_model->validation()) {
@@ -105,6 +105,7 @@ class Users extends CI_Controller
 
     public function setting($id)
     {
+        if ($this->session->userdata('role') != 'Pembuat' && $this->session->userdata('role') != 'Pemeriksa_Penandatangan') redirect('welcome');
         $data['error'] = '';
         $data['title'] = 'Pengaturan Akun';
         // var_dump($this->generateRandomString());
@@ -201,7 +202,7 @@ class Users extends CI_Controller
 
     public function nonactive($id)
     {
-        if ($this->session->userdata('role') != 'Admin' && $this->session->userdata('role') != 'Superadmin') redirect('welcome');
+        if ($this->session->userdata('role') != 'Admin');
         $this->Users_model->nonactive($id);
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('msg', '
@@ -221,7 +222,7 @@ class Users extends CI_Controller
 
     public function active($id)
     {
-        if ($this->session->userdata('role') != 'Admin' && $this->session->userdata('role') != 'Superadmin') redirect('welcome');
+        if ($this->session->userdata('role') != 'Admin');
         $this->Users_model->active($id);
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('msg', '

@@ -101,7 +101,7 @@
                                 <select name="nama_pemeriksa" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" required>
                                     <option disabled selected>Pilih Pemeriksa</option>
                                     <?php foreach ($user as $data) { ?>
-                                        <?php if ($data->user_role == "Penandatangan") { ?>
+                                        <?php if ($data->user_role == "Pemeriksa_Penandatangan") { ?>
                                             <option value="<?= $data->nama_lengkap ?>" <?= set_select('nama_pemeriksa', $data->nama_lengkap, $nama_pemeriksa == $data->nama_lengkap) ?>><?= $data->nama_lengkap ?></option>
                                         <?php } ?>
                                     <?php } ?>
@@ -114,7 +114,7 @@
                                 <select name="nama_penandatangan" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" required>
                                     <option disabled selected>Pilih Penandatangan</option>
                                     <?php foreach ($user as $data) { ?>
-                                        <?php if ($data->user_role == "Penandatangan") { ?>
+                                        <?php if ($data->user_role == "Pemeriksa_Penandatangan") { ?>
                                             <option value="<?= $data->nama_lengkap ?>" <?= set_select('nama_penandatangan', $data->nama_lengkap, $nama_penandatangan == $data->nama_lengkap) ?>><?= $data->nama_lengkap ?></option>
                                         <?php } ?>
                                     <?php } ?>
