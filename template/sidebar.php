@@ -64,7 +64,7 @@ $is_nonactiveUsersPage_span = $nonactiveUsersPage ? $span_active_state : '';
                         <span class="ml-4">Dashboard</span>
                     </a>
                 </li>
-                <?php if ($this->session->userdata('role') == 'Admin' || $this->session->userdata('role') == 'Superadmin') { ?>
+                <?php if ($this->session->userdata('role') == 'Admin') { ?>
                     <li class="relative px-6 py-3">
                         <?= $is_usersPage_span ?>
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 <?= $is_usersPage_a ?>" href="<?= site_url('users') ?>">
@@ -91,7 +91,7 @@ $is_nonactiveUsersPage_span = $nonactiveUsersPage ? $span_active_state : '';
                         </a>
                     </li>
                 <?php } ?>
-                <?php if ($this->session->userdata('role') == 'Penandatangan') { ?>
+                <?php if ($this->session->userdata('role') == 'Pemeriksa_Penandatangan') { ?>
                     <li class="relative px-6 py-3">
                         <?= $is_validationsPage_span ?>
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 <?= $is_validationsPage_a ?>" href="<?= site_url('pengesahan') ?>">
@@ -152,7 +152,7 @@ $is_nonactiveUsersPage_span = $nonactiveUsersPage ? $span_active_state : '';
                                 </a>
                             </li>
                         <?php } ?>
-                        <?php if ($this->session->userdata('role') == 'Admin' || $this->session->userdata('role') == 'Superadmin') { ?>
+                        <?php if ($this->session->userdata('role') == 'Admin') { ?>
                             <li class="relative px-6 py-3">
                                 <?= $is_nonactiveUsersPage_span ?>
                                 <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 <?= $is_nonactiveUsersPage_a ?>" href="<?= site_url('users/nonactive_users') ?>">
@@ -203,7 +203,7 @@ $is_nonactiveUsersPage_span = $nonactiveUsersPage ? $span_active_state : '';
                         <span class="ml-4">Dashboard</span>
                     </a>
                 </li>
-                <?php if ($this->session->userdata('role') == 'Admin' || $this->session->userdata('role') == 'Superadmin') { ?>
+                <?php if ($this->session->userdata('role') == 'Admin') { ?>
                     <li class="relative px-6 py-3">
                         <?= $is_usersPage_span ?>
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 <?= $is_usersPage_a ?>" href="<?= site_url('users') ?>">
@@ -230,7 +230,7 @@ $is_nonactiveUsersPage_span = $nonactiveUsersPage ? $span_active_state : '';
                         </a>
                     </li>
                 <?php } ?>
-                <?php if ($this->session->userdata('role') == 'Penandatangan') { ?>
+                <?php if ($this->session->userdata('role') == 'Pemeriksa_Penandatangan') { ?>
                     <li class="relative px-6 py-3">
                         <?= $is_validationsPage_span ?>
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 <?= $is_validationsPage_a ?>" href="<?= site_url('pengesahan') ?>">
@@ -279,7 +279,7 @@ $is_nonactiveUsersPage_span = $nonactiveUsersPage ? $span_active_state : '';
                         </a>
                     </li>
                 <?php } ?>
-                <?php if ($this->session->userdata('role') == 'Admin' || $this->session->userdata('role') == 'Superadmin') { ?>
+                <?php if ($this->session->userdata('role') == 'Admin') { ?>
                     <li class="relative px-6 py-3">
                         <?= $is_nonactiveUsersPage_span ?>
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 <?= $is_nonactiveUsersPage_a ?>" href="<?= site_url('users/nonactive_users') ?>">
